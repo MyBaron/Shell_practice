@@ -4,11 +4,11 @@
 
 - 练习Shell编程，以每个脚本为单位
 - 不定期更新
-- 更新时间2019-01-12
+- 更新时间2019-01-15
 - 项目已放到[github](https://github.com/MyBaron/Shell_practice),希望可以被start
 
 
-## NO.1
+## NO.1 echo 和read
 
 > 这次主要玩一下echo 和read
 > echo 输出内容
@@ -48,7 +48,7 @@ echo "Hellp ${firstname}${lastname} today is $(date +%Y%m%d) "
 exit 0
 ```
 
-## NO.2
+## NO.2 检查一下文件是否存在
 
 > 功能：检查一下文件是否存在
 > 练习内容：
@@ -86,4 +86,49 @@ str2="str"
 echo "\nstr1=str,str2=str"
 test ${str1}=${str2} && echo "相等" || echo "不相等"
 exit 0
+```
+
+## NO.3 文件拷贝到指定目录下
+
+> 将文件拷贝到指定目录下
+> 练习内容
+> 1. 输入参数
+> 2. 逻辑判断 If-elif-else
+
+``` shell
+#!/bin/bash
+#2018-09-015 baron
+#github: https://github.com/MyBaron/Shell_practice
+#将文件拷贝到指定目录下
+
+#输入参数
+# 执行该脚本命令 sh xx.sh hello.sh /baron/path
+# hello 为输入的参数
+# ${n} 为第n个传入参数 从1开始 0是文件名称
+# $# 为传入参数的个数
+
+file=${1}
+path=${2}
+echo "输入的file为${file}"
+echo "输入的path为${path}"
+echo "输入的参数个数为$#"
+
+
+# if-elif-else 逻辑"
+# if判断语句在[] 里面
+# 注意： [] 里面要有空格！！！！！！
+# if 配合test语句使用 不需要[]
+
+if [ "${file}" == "" ] && [ "${path}" == "" ]; then
+        echo "file和path都不能为空"
+elif test -e ${file} ; then
+        echo "将${file}拷贝到${path}"
+        cp -r -i ${file} ${path}
+else
+        echo "file 文件不存在"
+fi
+
+exit 0
+
+
 ```
