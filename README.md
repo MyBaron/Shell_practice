@@ -4,7 +4,7 @@
 
 - 练习Shell编程，以每个脚本为单位
 - 不定期更新
-- 更新时间2019-01-15
+- 更新时间2019-01-17
 - 项目已放到[github](https://github.com/MyBaron/Shell_practice),希望可以被start
 
 
@@ -189,5 +189,71 @@ done
 echo "ok,that is checking over"
 exit 0 
 
+```
+
+## No.4 检查端口情况
+
+> 功能：检查端口情况
+> 练习内容
+> 1. 输入流
+> 2. if 判断条件
+> 3. grep 信息筛选
+
+
+``` shell
+#!/bin/bash
+#@author baron
+#@data 2018-09-06
+#@content check any port is been taken
+
+echo "Now , I will detect your Linux server's services!"
+if [ "${1}" != "" ]; then
+        echo "The www,ftp,ssh,mail(stmp),and you want to check ${1} will be detected! \n"
+else
+        echo "The www,ftp,ssh,mail(stmp) will be detected! \n"
+fi
+# 设定输出路径
+testfile=checkPortResult.txt
+
+
+# 将netstat结果输出到文件
+# > 为输入重定向 例如 xx0 > xx1.txt 意思是将xx0的内容输入到xx1.txt中
+
+netstat -tuln > ${testfile}
+
+
+# 检测各个端口情况
+# 利用grep 检索关键字
+
+esting=$(grep ":80" ${testfile})
+if [ "${testing}" != ""  ]; then
+        echo "WWW is running in your system"
+fi
+
+testing=$(grep ":22" ${testfile})
+if [ "${testing}" != ""  ]; then
+        echo "SSH is running in your system"
+fi
+
+testing=$(grep ":21" ${testfile})
+if [ "${testing}" != ""  ]; then
+        echo "FTP is running in your system"
+fi
+
+testing=$(grep ":25" ${testfile})
+if [ "${testing}" != ""  ]; then
+        echo "Mail is running in your system"
+fi
+
+if [ "${1}" != "" ]; then
+        testing=$(grep ":${1}" ${testfile})
+        if [ "${testing}" != ""  ]; then
+                echo "${1} port is running in your system"
+        fi
+fi
+
+echo "check is over , thank you"
+exit 0
+        
 ```
 
