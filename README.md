@@ -4,7 +4,8 @@
 
 - 练习Shell编程，以每个脚本为单位
 - 不定期更新
-- 更新时间2019-01-17
+- 目前脚本数量为9个
+- 更新时间2019-01-13
 - 项目已放到[github](https://github.com/MyBaron/Shell_practice),希望可以被start
 
 
@@ -372,4 +373,31 @@ fi
 IP=$(ifconfig |head -n2|grep mask|awk '{print $2}')
 echo "当前的IP：$IP"
 
+```
+
+## No.9 trap捕获信号
+> 对trap指令进行运用
+
+``` shell
+#!/bin/bash
+# baron
+# 2019-01-23
+# trap的使用 捕获信号
+# trap commands signals : commands 捕获后触发的命令，signals 需要捕获的命令
+
+echo "无法通过ctrl-c 来终止这个脚本,此脚本会运行10秒"
+# SIGINT 是终止线程  SIGTERM 是尽可能终止进程
+trap "echo '我已经告诉过你，你无法终止这个脚本'" SIGINT SIGTERM
+
+count=1
+
+while [ $count -lt 10 ]
+do
+        echo "第${count}秒"
+        sleep 1
+        count=$[ $count + 1 ]
+
+done
+# 捕获程序退出指令
+trap "echo \"脚本运行结束,运行时间${count}秒\" " EXIT
 ```
