@@ -4,8 +4,8 @@
 
 - 练习Shell编程，以每个脚本为单位
 - 不定期更新
-- 目前脚本数量为11个
-- 更新时间2019-01-25
+- 目前脚本数量为13个
+- 更新时间2019-01-26
 - 项目已放到[github](https://github.com/MyBaron/Shell_practice),希望可以被start
 
 
@@ -511,4 +511,35 @@ echo "命令返回值是：$?"
 # print $i 是输出切割后的第几列 $0是整行
 val=`echo "第一 第二 第三 第四"|awk '{for(i=1;i<=NF;i++){print $i}}'`
 echo $val
+```
+
+## No.13 练习函数传递数组
+
+> 练习函数传递数组
+
+``` shell
+    #!/bin/bash
+# baron
+# 2019-01-26
+# 练习函数传递数组
+
+function fun(){
+        local sum=0
+        local newarray
+        #接收参数
+        newarray=(`echo "$@"`)
+        #遍历数组中的每一个数
+        for num in ${newarray[*]}
+        do
+                sum=$[ $sum + $num  ]
+        done
+        echo $sum
+
+}
+
+array=(1 2 3 4 5 6 )
+echo "输入的数组是 ${array[*]}"
+arg1=`echo ${array[*]}`
+result=`fun $arg1`
+echo "数组累加的结果是：$result"
 ```
