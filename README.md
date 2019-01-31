@@ -4,8 +4,8 @@
 
 - 练习Shell编程，以每个脚本为单位
 - 不定期更新
-- 目前脚本数量为16个
-- 更新时间2019-01-30
+- 目前脚本数量为17个
+- 更新时间2019-01-31
 - 项目已放到[github](https://github.com/MyBaron/Shell_practice),希望可以被start
 
 
@@ -654,3 +654,61 @@ do
 done
 exit 0
 ```
+
+## No.16 查看网络情况和系统信息
+
+> 查看网络情况和系统信息
+> 联系内容:
+> 1. 变色字体
+> 2. tput sgr0还原终端配置
+> 3. ping 查看网络情况
+> 4. uname 查看系统信息
+
+
+> 效果
+
+``` linux
+网络状态：可连接
+该系统类型是：GNU/Linux
+系统的发行版本：3.10.0-862.el7.x86_64
+系统的名称：Linux
+系统的类型：x86_64
+```
+
+> 代码
+
+``` shell
+#!/bash/bin
+# baron
+# 2019-01-31
+# 测试网络和系统信息
+
+
+# tput 可以更改几项终端功能，如移动或更改光标、更改文本属性，以及清除终端屏幕的特定区域
+# sgr0 表示清除所有更改的配置
+reset=`tput sgr0`
+
+# 查看是否可以联网
+# \E[32m 是修改字体颜色，32m 是绿色
+ping -c 1 www.baidu.com &> /dev/null && echo -e '\E[32m'"网络状态：${reset}可连接 " || echo -e '\E[32m'"网络状态：${reset}未连接"
+
+
+# 查看系统类型
+# mac系统并没有-o选项
+os=`uname -o`
+echo -e '\E[32m'"该系统类型是：${reset}$os"
+
+
+# 系统的发行版本
+REV=`uname -r`
+# 系统的名称
+OS=`uname -s`
+# 系统类型
+MACH=`uname -m`
+echo -e '\E[32m'"系统的发行版本：${reset}$REV"
+echo -e '\E[32m'"系统的名称：${reset}$OS"
+echo -e '\E[32m'"系统的类型：${reset}$MACH"
+
+
+```
+
