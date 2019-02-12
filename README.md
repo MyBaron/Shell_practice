@@ -712,3 +712,42 @@ echo -e '\E[32m'"系统的类型：${reset}$MACH"
 
 ```
 
+## No.16 查看系统网络
+
+> 查看网络情况和系统信息
+
+
+> 效果图
+
+``` linux
+ 本地ip地址： 10.10.1.234 172.17.0.1
+ 外网ip地址：  183.238.79.207
+ DNS地址：  114.114.114.114 8.8.8.8
+```
+
+> 代码
+
+``` shell
+
+#!/bin/bash
+# baron
+# 2019-02-12
+# 查看系统网络
+
+reset=`tput sgr0`
+
+# 获取本地Ip
+internalip=`hostname -I`
+echo -e '\E[32m' "本地ip地址："${reset} ${internalip}
+
+# 获取外网Ip
+externalip=`curl -s ipecho.net/plain`
+echo -e '\E[32m' "外网ip地址：" ${reset} $externalip
+
+# 定义DNS服务器的IP地址
+# sed '1 d' 代表删除第一行
+nameservers=$(cat /etc/resolv.conf | sed '1 d' | awk '{print $2}' )
+# 也可以用awd 的NR 来实现sed的效果
+nameservers1=$(cat /etc/resolv.conf | awk 'NR>1{print $2}' )
+echo -e '\E[32m' "DNS地址：" ${reset} ${nameservers}
+```
