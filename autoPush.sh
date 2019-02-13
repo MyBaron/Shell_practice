@@ -22,11 +22,17 @@ function judge(){
 	
 	else
 		echo ".git文件夹不存在，请将该脚本放到与.git文件夹同一级中"
+		exit -1
 	fi
 }
 function push(){
 	git add .
 	git commit -m "$(date +%Y-%m-%d)"
-	git push origin
+	git push origin 
 }
 judge
+echo "提交完毕"
+exit 0
+
+
+
