@@ -4,8 +4,8 @@
 
 - 练习Shell编程，以每个脚本为单位
 - 不定期更新
-- 目前脚本数量为17个
-- 更新时间2019-01-31
+- 目前脚本数量为18个
+- 更新时间2019-02-12
 - 项目已放到[github](https://github.com/MyBaron/Shell_practice),希望可以被start
 
 
@@ -712,7 +712,7 @@ echo -e '\E[32m'"系统的类型：${reset}$MACH"
 
 ```
 
-## No.16 查看系统网络
+## No.17 查看系统网络
 
 > 查看网络情况和系统信息
 
@@ -750,4 +750,50 @@ nameservers=$(cat /etc/resolv.conf | sed '1 d' | awk '{print $2}' )
 # 也可以用awd 的NR 来实现sed的效果
 nameservers1=$(cat /etc/resolv.conf | awk 'NR>1{print $2}' )
 echo -e '\E[32m' "DNS地址：" ${reset} ${nameservers}
+```
+
+## No.18 自动提交push代码到远程
+
+> 自动提交push代码到远程
+> 思路：
+> 1. 将本脚本的添加到忽略提交名单中
+> 2. 利用git命令进行提交
+> 3. commit 信息是当前日期
+
+``` shell
+#!/bash/bin
+# baron
+# 2019-02-13
+# 自动提交到远程代码库
+
+# 检查当前路径是否有.git文件夹
+function judge(){
+	if [  -x ".git" ];then
+		# 获取当前文件的名称
+		if [ -f  ".git/.gitignore"  ];then
+			echo "添加忽略提交该脚本到远程代码库"
+			echo "当前脚本名称${0}"
+			echo ${0} >> .git/.gitignore
+			push
+		else
+			echo "创建 .gitignore文件"
+			echo "当前脚本名称${0}"
+			touch .git/.gitignore
+			echo ${0} >> .git/.gitignore
+			push
+		fi
+
+	else
+		echo ".git文件夹不存在，请将该脚本放到与.git文件夹同一级中"
+		exit -1
+	fi
+}
+function push(){
+	git add .
+	git commit -m "$(date +%Y-%m-%d)"
+	git push origin
+}
+judge
+echo "提交完毕"
+exit 0
 ```
