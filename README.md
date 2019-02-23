@@ -1,5 +1,5 @@
-#Shell_practice
-  
+#hell_practice
+   
 ## 本篇
    
 - 练习Shell编程，以每个脚本为单位
