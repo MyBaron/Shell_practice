@@ -7,16 +7,16 @@
 function judge(){
 	if [  -x ".git" ];then
 		# 获取当前文件的名称
-		if [ -f  ".git/.gitignore"  ];then
+		if [ -f  ".gitignore"  ];then
 			echo "添加忽略提交该脚本到远程代码库"
 			echo "当前脚本名称${0}"
-			echo ${0} >> .git/.gitignore
+			echo ${0} >> .gitignore
 			push
 		else 
 			echo "创建 .gitignore文件"
 			echo "当前脚本名称${0}"
-			touch .git/.gitignore
-			echo ${0} >> .git/.gitignore
+			touch .gitignore
+			echo ${0} >> .gitignore
 			push		
 		fi
 	
